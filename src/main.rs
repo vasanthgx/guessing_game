@@ -1,5 +1,6 @@
 use std::io;
 use rand::Rng;
+use std::cmp::Ordering;
 
 fn main() {
 
@@ -14,7 +15,14 @@ fn main() {
     let mut guess = String::new();
     io::stdin().read_line(&mut guess).expect("Failed to read line");
 
+    let guess:u32 = guess.trim().parse().expect("Please type a number");
+
     println!("You guessed: {guess}");
+    match guess.cmp(&secret_number) {
+        Ordering::Less => println!("Too small"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+    }
 }
 
 
@@ -35,4 +43,21 @@ fn main() {
 let secret_number = rand::thread_rng().gen_range(1..=100)
 printLn!(The secret number is {}", secret_number)
 
+*/
+
+
+//////////////////////Comparing the Guess to the Secret Number /////////////////////////
+
+/*
+we add another use statement, bringing a type called std::cmp::Ordering into scope from the standard library. The Ordering type is another enum and has the variants Less, Greater, and Equal. These are the three outcomes that are possible when you compare two values.
+
+match guess.cmp(&secret_number) {
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+
+We get an error of mismatched types. To overcome this
+We create a variable named guess. But wait, doesn’t the program already have a variable named guess? It does, but helpfully Rust allows us to shadow the previous value of guess with a new one. "Shadowing" lets us reuse the guess variable name rather than forcing us to create two unique variables, such as guess_str and guess, for example.
+
+let guess: u32 = guess.trim().parse().expect("Please type a number!");
 */
